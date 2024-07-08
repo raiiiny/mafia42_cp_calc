@@ -13,6 +13,7 @@ function allItems(params: URLSearchParams) {
 		const allItemsQuery = db.prepare("SELECT * FROM items ORDER BY name ASC");
 		allItemList = allItemsQuery.all();
 	}
+	console.log(allItemList);
 	db.close();
 	return allItemList;
 }
