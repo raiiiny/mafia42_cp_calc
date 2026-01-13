@@ -1,38 +1,48 @@
-# create-svelte
+# mafia42_cp_calc
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+온라인 마피아 게임 [마피아42](https://mafia42.com)의 수집형 아이템(장착) 총합 점수인 CP(수집 포인트, Collect Point)의 총량을 계산할 수 있도록 만들어진 계산기입니다.
 
-## Creating a project
+Calculate CP(Collect Point) in [Mafia42](https://mafia42.com), an online mafia game.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 개발서버 사용하기
+1. 이 레포지토리를 다운받습니다.
+2. 터미널에 `npm run dev -- --open` 을 입력합니다.
+3. `localhost:5000` 으로 입장되면 끝!
+4. 계산되는 아이템을 추가하고 싶다면 아래 '아이템 추가하기' 문단을 확인하세요. 
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## 빌드하기
+당신이 이 악마의 코드를 견뎌내고 정말 빌드하고 싶다면...
+1. 이 레포지토리를 다운받습니다.
+2. 터미널에 `npm run build` 를 입력합니다.
+3. 빌드된 파일을 게시합니다.
+4. 계산되는 아이템을 추가하고 싶다면 아래 '아이템 추가하기' 문단을 확인하세요.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### SvelteKit 최신 버전 사용하기
+이 레포지토리에서 사용된 SvelteKit은 최신 버전이 아닙니다.<br>
+따라서 여러분이 SvelteKit을 최신 버전으로 사용하고 싶다면 [`npx sv migrate`](https://svelte.dev/docs/cli/sv-migrate)에 대해 알아보세요.
 
-## Developing
+## 아이템 추가하기
+이 프로젝트는 학교 프로젝트를 위해 가볍게 만든 만큼 모든 아이템이 추가되어 있는 상태가 아닙니다.<br>
+상점 아이템과 일부 이벤트 및 마피아42 '혈귀비' 계정에서 2023년까지 보유중인 장착에 대응되는 아이템만 추가되어 있습니다.<br>
+따라서 이 레포지토리를 통해 계산기를 사용하시겠다고 하신다면 아래 방법대로 아이템 목록을 추가해주셔야 합니다.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. **SQLite를 사용할 수 있는** 시중의 어떠한 DB 편집기를 통해 [`db/items.db`](https://github.com/raiiiny/mafia42_cp_calc/blob/main/db/items.db) 파일을 엽니다.
+2. items 테이블에 정보를 입력하고 저장합니다.
 
-```bash
-npm run dev
+items.db의 items 테이블엔 아래와 같이 정리되어 있습니다.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+| name | group | point |
+| ---- | ----- | ----- |
+| 신비한 합창 | 명패 | 1000 |
+| 웨딩 연인 스킨 | 스킨 | 1000 |
+| 서부 고고학자 도굴꾼 스킨 | 스킨 | 500 |
+| 살롱의 안주인 마담 스킨 | 스킨 | 500 |
+| 학자의 기록 테두리 | 테두리 | 500 |
+| ... | ... | ... |
 
-## Building
+`name`에는 아이템 이름이 들어가야 합니다. 인게임 혹은 공식카페의 확률 게시글을 기반으로 작성해주세요.
 
-To create a production version of your app:
+`group`에는 `명패`, `스킨`, `테두리`, `지갑`, `이모티콘` 중 하나가 들어가야 합니다.
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+`point`에는 정수값이 들어갑니다. **이 값을 통해 CP가 계산되니 정확히 입력해주세요.**<br>
+기본값은 500입니다. (이벤트 아이템들이 거의 대부분 500 CP를 지급합니다.)
